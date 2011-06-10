@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>&raquo; Articles &amp; Authors</title>
+  <%= stylesheet_link_tag :all %>
+  <%= javascript_include_tag 'jquery', 'jquery.min', 'jquery_ujs', "http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.13/jquery-ui.min.js", 'application'  %>
+  <%= javascript_include_tag :ckeditor %>
+  <link rel="icon" href="../images/missing_small.jpg" type="image/x-icon" />
+  <%= csrf_meta_tag %>
+</head>
+<body>
+<div id="nav-background"></div>
+<div class="container_12">
+  <div id="nav" class="grid_12">
+    <span id="logo">Articles <span id="ampersand">&amp;</span> Authors</span>
+    <ul>
+      <li><%= link_to 'Home', root_path %></li>
+      <li>
+        <%= link_to 'Articles', articles_path %>
+        <% if author_signed_in? %>
+        <div class="sub-nav">
+          <ul>
+            <li><%= link_to 'All Articles', articles_path %></li>
+            <li><%= link_to 'My Articles', list_articles_path %></li>
+            <li><%= link_to 'Write an Article', new_article_path %></li>
+          </ul>
+        </div>
+        <% end %>
+      </li>
+      <li>
+        <%= link_to 'Authors', authors_path %>
+        <% if author_signed_in? %>
+        <div class="sub-nav">
+          <ul>
+            <li><%= link_to 'All Authors', authors_path %></li>
+            <li><%= link_to 'My Profile', author_path(current_author) %></li>
+          </ul>
+        </div>
+        <% end %>
+      </li>
+      <li>
+      <% if not author_signed_in? %>
+      <%= link_to 'Log In', new_author_session_path, :id => "sign-out", :remote => true %>
+      <% else %>
+      <%= link_to 'Sign Out', destroy_author_session_path, :id => "sign-out" %>
+      <% end %>
+      </li>
+    </ul>
+  </div>
+  <div id="container" class="grid_12">
+<%= yield %>
+  </div>
+  <% if author_signed_in? %>
+  <div id="whoami">
+    <span>&raquo; whoami?</span>
+  </div>
+  <div id="whoami-content">
+    <%= image_tag current_author.photo.url(:thumb) %>
+    <span><small>You are: </small><br/><%= link_to current_author.first_name, author_path(current_author)%></span>
+  </div>
+  <% end %>
+</div>
+</body>
+</html>

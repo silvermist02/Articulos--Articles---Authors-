@@ -1,0 +1,53 @@
+<h1><%= @author.full_name %></h1>
+<div class="grid_3">
+<%= image_tag @author.photo.url(:small), :class => "photo-small"%>
+ <% if current_author.eql? @author %>
+ <ul>
+  <li><%= link_to 'Edit Profile', edit_author_path(@author), :class => "links" %></li>
+  <li><%= link_to 'Write Article', new_article_path, :class => "links" %></li>
+  <li><%= link_to 'Delete Profile', @author, :confirm => 'Are you sure?', :method => :delete, :class => "links" %></li>
+</ul>
+<% end %>
+</div>
+<div class="grid_5">
+<ul  id="author-info">
+  <%if @author.remarks != "" %>
+  <li><span>I am:</span>
+    <p>
+      <%= @author.remarks %>
+    </p> 
+  </li>
+  <%end%>
+  <%if not @author.birthday.nil? %>
+  <li><span>I was born on:</span> <%= @author.birthday %></li>
+  <% end %>
+  <li>
+  <%if not @author.email.nil? %>
+  <li><span>Contact me at:</span> <%= mail_to @author.email, @author.email %></li>
+  <% end %>
+  <li>
+  
+  <% if not @author.articles.posted.empty? %>
+  <span>I have written:</span>
+  <ul>
+    <% @author.articles.posted.each do |a|%>
+      <li><%= link_to a.title, article_path(a) %></li>
+    <% end %>
+  </ul>
+  <% else %>
+    I have not yet written any articles.
+  <% end %></li>
+
+<% if not @author.place.nil? %>
+<li><span>You can find me at:</span>
+    <div id="map_canvas"></div>
+</li>
+</ul>
+</div>
+
+
+<%= javascript_include_tag "http://maps.google.com/maps/api/js?sensor=true", 'gmap' %>
+<script type="text/javascript">
+  initialize(<%= @author.place.latitude %>, <%= @author.place.longitude%>, "<%= @author.place.location %>")
+</script>
+<% end %>

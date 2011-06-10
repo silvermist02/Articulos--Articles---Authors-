@@ -1,0 +1,8 @@
+
+  <%= flash[:error] if flash[:error] %>
+  <ul id="comment-form">
+    <li>
+        <%= f.text_area :body, :id => "comment-form-body"%></li>
+
+    <li><%= f.submit %></li>
+  </ul>

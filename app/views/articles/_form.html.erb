@@ -1,0 +1,38 @@
+
+
+<%= form_for(@article) do |f| %>
+  <% if @article.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@article.errors.count, "error") %> prohibited this article from being saved:</h2>
+
+      <ol>
+      <% @article.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ol>
+    </div>
+  <% end %>
+  <% if flash[:error] %>
+  <div id="flash"><%= flash[:error] %></div>
+  <% end %>
+ <ul id="form"> 
+
+    <li><%= f.label :title %>
+        <%= f.text_field :title %></li>
+  
+ 
+    <li><%= f.label :body %>
+        <%= f.cktext_area :body, :toolbar=>'Full', :width=>'98%', :height=>'400px' %>
+</li>
+  
+  
+  
+    <li><%= f.label :status %>
+        <%= f.select :status, options_for_status  %></li>
+ 
+  
+  
+    <li><%= f.submit %></li>
+  </ul>
+
+<% end %>

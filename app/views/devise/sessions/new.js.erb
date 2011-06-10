@@ -1,0 +1,8 @@
+$('body').append("<%= escape_javascript(render :partial => 'form')%>");
+$('#pop-box').fadeIn();
+$('.container_12').css("opacity", "0.5"); 
+$("#pop-box-close").click(function(){
+  $('.container_12').css("opacity", "1"); 
+  $("#disable").fadeOut(1000).remove();
+
+});
